@@ -2,3 +2,46 @@ Objective:
 AgriPal provides rural farmers with a mobile app enhanced by AI technology. It offers customized guidance, updates, and educational materials to improve crop production and farming methodologies, uplifting the local community.
 Business background: 
 AgriPal's business background is rooted in addressing the challenges faced by farmers. With limited access to modern agricultural practices and information, farmers often struggle to optimize their yields and improve their livelihoods. AgriPal aims to bridge this gap by providing an AI-driven mobile app that offers personalized agricultural advice, real-time insights, and educational resources.
+
+
+# OpenWeatherMap API key
+api_key = '69aec7bc4691535f73f99f24a8971860'
+
+# get location
+city_name = location_data['city']
+country_code = location_data['country']
+
+
+url = f'https://api.openweathermap.org/data/2.5/weather?q={city_name},{country_code}&appid={api_key}'
+
+
+
+response = requests.get(url)
+
+# Check if the request was successful
+if response.status_code == 200:
+    
+    weather_data = response.json()
+
+    
+    temperature_kelvin = weather_data['main']['temp']
+    temperature_celsius = temperature_kelvin - 273.15  # Convert to Celsius
+    weather_description = weather_data['weather'][0]['description']
+    pressure = weather_data['main']['pressure']
+    humidity = weather_data['main']['humidity']
+    wind_speed = weather_data['wind']['speed']
+    cloud_cover = weather_data['clouds']['all']
+
+
+    print(f"Weather in {city_name}, {country_code}:")
+    print(f"Temperature: {temperature_celsius:.2f}°C")
+    print(f"Description: {weather_description.capitalize()}")
+    print(f"Humidity: {humidity}%")
+    print(f"Pressure: {pressure}hPa")
+    print(f"Wind speed:{wind_speed}m/s")
+    print(f"cloud cover:{cloud_cover}%")
+    print('')
+
+
+else:
+    print(f"Failed to retrieve weather data. Status code: {response.status_code}")
